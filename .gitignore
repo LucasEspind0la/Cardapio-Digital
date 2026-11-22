@@ -1,0 +1,22 @@
+# Segredos e configuração local
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+application-local.yaml
+application-local.yml
+application-local.properties
+
+# Build e dependências
+target/
+node_modules/
+dist/
+.angular/
+HELP.md
+
+# IDEs e sistema
+.idea/
+.vscode/
+*.iml
+.DS_Store
