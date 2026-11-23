@@ -1,0 +1,20 @@
+<nav class="tabs" aria-label="Categorias do cardápio">
+  @for (c of cardapio(); track c.id) {
+    <button
+      type="button"
+      class="tab"
+      [class.tab--ativa]="c.id === categoriaAtiva()?.id"
+      (click)="selecionarCategoria(c.id)"
+    >
+      {{ c.nome }}
+    </button>
+  }
+</nav>
+
+@if (categoriaAtiva(); as categoria) {
+  <section class="grid">
+    @for (p of categoria.produtos; track p.id) {
+      <app-product-card [produto]="p" (escolher)="escolher($event)" />
+    }
+  </section>
+}

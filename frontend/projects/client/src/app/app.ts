@@ -1,28 +1,19 @@
-import { Component, inject } from '@angular/core';
-import { toSignal } from '@angular/core/rxjs-interop';
-import { CardapioApi } from 'shared';
+import { Component } from '@angular/core';
+import { CardapioPage } from './cardapio/cardapio-page';
 
 @Component({
   selector: 'app-root',
+  imports: [CardapioPage],
   template: `
-    <h1>Cardápio</h1>
-    @for (categoria of cardapio(); track categoria.id) {
-      <section>
-        <h2>{{ categoria.nome }}</h2>
-        @for (produto of categoria.produtos; track produto.id) {
-          <article>
-            <h3>{{ produto.nome }}</h3>
-            <p>{{ produto.descricao }}</p>
-            @for (t of produto.tamanhos; track t.id) {
-              <span>{{ t.nome }}: R$ {{ t.preco }} </span>
-            }
-          </article>
-        }
-      </section>
-    }
+    <header class="topo">
+      <div class="container">
+        <span class="logo" aria-hidden="true">🍇</span>
+        <h1>Nome da Açaiteria</h1>
+      </div>
+    </header>
+    <main class="container">
+      <app-cardapio-page />
+    </main>
   `,
 })
-export class App {
-  private readonly api = inject(CardapioApi);
-  protected readonly cardapio = toSignal(this.api.buscarCardapio(), { initialValue: [] });
-}
+export class App {}

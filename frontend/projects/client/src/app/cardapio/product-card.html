@@ -1,0 +1,27 @@
+<article class="card">
+  <div class="card__media">
+    @if (produto().imagemUrl) {
+      <img [src]="produto().imagemUrl" [alt]="produto().nome" loading="lazy" />
+    } @else {
+      <span class="card__placeholder" aria-hidden="true">🍇</span>
+    }
+  </div>
+
+  <div class="card__body">
+    <h3 class="card__title">{{ produto().nome }}</h3>
+
+    @if (produto().descricao) {
+      <p class="card__desc">{{ produto().descricao }}</p>
+    }
+
+    <div class="card__footer">
+      @if (precoInicial() !== null) {
+        <span class="card__price">
+          <small>a partir de</small>
+          {{ formatar(precoInicial() ?? 0) }}
+        </span>
+      }
+      <button type="button" class="btn" (click)="escolher.emit(produto())">Escolher</button>
+    </div>
+  </div>
+</article>
