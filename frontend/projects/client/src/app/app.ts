@@ -1,12 +1,28 @@
-import { Component, signal } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Component, inject } from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
+import { CardapioApi } from 'shared';
 
 @Component({
-  imports: [RouterOutlet],
   selector: 'app-root',
-  styleUrl: './app.scss',
-  templateUrl: './app.html',
+  template: `
+    <h1>Cardápio</h1>
+    @for (categoria of cardapio(); track categoria.id) {
+      <section>
+        <h2>{{ categoria.nome }}</h2>
+        @for (produto of categoria.produtos; track produto.id) {
+          <article>
+            <h3>{{ produto.nome }}</h3>
+            <p>{{ produto.descricao }}</p>
+            @for (t of produto.tamanhos; track t.id) {
+              <span>{{ t.nome }}: R$ {{ t.preco }} </span>
+            }
+          </article>
+        }
+      </section>
+    }
+  `,
 })
 export class App {
-  protected readonly title = signal('client');
+  private readonly api = inject(CardapioApi);
+  protected readonly cardapio = toSignal(this.api.buscarCardapio(), { initialValue: [] });
 }
